@@ -1,0 +1,49 @@
+select * from emp;
+select * from depts;
+
+create table depts(deptno number(2),dname varchar2(14),loc varchar2(13));
+
+declare
+s number:=1;
+begin
+for s in 1..1
+loop
+insert into depts values(10,'accounting','new york');
+insert into depts values(20,'research','dallas');
+insert into depts values(30,'sales','chicago');
+insert into depts values(40,'operations','boston');
+end loop;
+end;
+
+--------------creating view
+
+create view emp_dept as
+select e.empno,e.ename,e.sal,d.deptno,d.dname
+from emp e,depts d
+where
+e.deptno=d.deptno;
+
+--------------reading view
+select * from emp_dept;
+
+--------------------try to inserting
+insert into emp_dept values(2000,'Hemanth',1000,50,'developer');
+
+--------------------using instead of triggers
+
+create or replace trigger instead_emp_dept
+instead of insert on emp_dept
+declare
+v_dept depts.deptno%type;
+begin
+select deptno into v_dept from depts
+where deptno=:new.deptno;
+exception
+when no_data_found then
+insert into depts(deptno,dname)
+values(:new.deptno,:new.dname)returning 
+deptno into v_dept;
+insert into emp(empno,ename,sal,deptno)
+values(2000,'Hemanth',1000,v_dept);
+end;
+---------------------now inserting
