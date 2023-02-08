@@ -1,0 +1,19 @@
+declare
+sal number:=1;
+begin
+for sal in 1..1
+loop
+insert into Reserves values (22, 101, '10/10/98'); 
+insert into Reserves values (22, 102, '10/10/98'); 
+insert into Reserves values (22, 103, '10/8/98'); 
+insert into Reserves values (22, 104, '10/7/98'); 
+insert into Reserves values (31, 102, '11/10/98'); 
+insert into Reserves values (31, 103, '11/6/98'); 
+insert into Reserves values (31, 104, '11/12/98'); 
+insert into Reserves values (64, 101, '9/5/98'); 
+insert into Reserves values (64, 102, '9/8/98'); 
+insert into Reserves values (74, 103, '9/8/98'); 
+
+end loop;
+end;
+select * from reserves;
