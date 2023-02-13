@@ -1,0 +1,88 @@
+1.	OVER:
+SELECT empno,ename,sal,SUM(sal) OVER() AS total_sal FROM emp ORDER BY ename,sal,total_sal;
+
+2.	OVER Partition by:
+
+SELECT empno,job,sal, SUM(sal) OVER(PARTITION BY job) AS sal_dept FROM emp ORDER BY job;
+
+3.	Row_number:
+
+SELECT empno,ename,sal, deptno,ROW_NUMBER() OVER(PARTITION BY deptno ORDER BY empno DESC) AS row_num
+FROM emp;
+
+SELECT empno,ename,sal, job, ROW_NUMBER() OVER(PARTITION BY job ORDER BY empno DESC) AS row_num FROM emp;
+
+
+4.	Rank():
+
+SELECT deptno, RANK () OVER (order by deptno) rnk FROM EMP;
+
+SELECT empno, job, sal, RANK() OVER(PARTITION BY job ORDER BY sal DESC) AS rnk
+FROM emp;
+
+SELECT empno, ename, deptno, sal, RANK() OVER(PARTITION BY deptno ORDER BY sal DESC) AS rnk
+FROM emp;
+
+5.	Dense_rank():
+
+SELECT deptno, RANK () OVER (ORDER BY deptno) city_rank FROM EMP;
+
+SELECT deptno, RANK () OVER (order by deptno) rnk FROM EMP;
+
+SELECT empno, job, sal, RANK() OVER(PARTITION BY job ORDER BY sal DESC) AS rnk
+FROM emp;
+
+SELECT empno, ename, deptno, sal, RANK() OVER(PARTITION BY deptno ORDER BY sal DESC) AS rnk
+FROM emp;
+
+
+6.	First_value():
+
+select empno,hiredate,job,FIRST_VALUE(hiredate) OVER(PARTITION BY job ORDER BY hiredate)FIRST
+from emp;
+7.	Last_value():
+
+select empno,ename,hiredate,job,LAST_VALUE(hiredate) OVER(PARTITION BY job ORDER BY job
+RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)HIGHEST_AGE
+from emp;
+8.	Lead():
+SELECT Empno,sal,LEAD(sal) OVER ( ORDER BY empno) lead_sal FROM emp WHERE deptno = 20;
+
+9.	Lag():
+SELECT Empno,sal,Lag(sal) OVER ( ORDER BY empno) lead_sal FROM emp WHERE deptno = 20;
+
+10.	Nth_value():
+
+SELECT empno,ename,deptno,sal,NTH_VALUE(sal,3) OVER (PARTITION BY deptno ORDER BY deptno DESC
+RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) AS Third_highest_sal
+FROM emp;
+
+11.	Ntile():
+
+SELECT empno,ename,sal, NTILE(5) OVER( ORDER BY sal DESC) bucket_number FROM emp;
+
+12.	CUME_DIST():
+
+SELECT empno,sal, ROUND(cume_dist() OVER (ORDER BY sal DESC) * 100,2) || '%' cumulative_dist FROM emp;
+
+13.	PERCENT_RANK():
+
+SELECT empno,sal,
+ROUND(PERCENT_RANK() OVER (ORDER BY sal DESC) * 100,2) || '%' percent_rank FROM emp;
+
+14.	Pivot Table():
+
+SELECT * FROM  (SELECT empno, ename, job, deptno, sal FROM  Emp)  PIVOT (sum(Sal) FOR deptno IN (10,20,30));
+
+
+SELECT * FROM  (SELECT empno, ename, job, deptno, sal FROM  Emp) PIVOT (count(job)for job in('CLERK','ANALYST','MANAGER','PRESIDENT'));
+15.	Pivot_In_Clause Alias():
+
+SELECT * FROM (SELECT job, Deptno, Sal FROM Emp) PIVOT (SUM (Sal)DEPT FOR Deptno IN (10, 20, 30));
+
+16.	Multiple Columns in PIVOT Clause():
+
+SELECT * FROM (SELECT job, deptno, Sal FROM Emp)
+PIVOT (SUM (Sal) Dept_Sal, COUNT(deptno) Dept_Count FOR Deptno IN (10, 20));
+
+
