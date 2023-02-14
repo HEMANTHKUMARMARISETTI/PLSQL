@@ -1,0 +1,16 @@
+select * from employees;
+
+describe employees;
+
+select department_id,department_id,manager_id,location_id from departments;
+
+select employee_id,last_name,job_id,hire_date as startdate from employees;
+
+select distinct(job_id) as job_id from employees;
+
+select employee_id "EMP #",last_name as employee,job_id as job ,hire_date "hire date" from employees;
+
+select last_name||' , '||job_id "employee and title" from employees;
+
+select employee_id||' , '||first_name||' , '||last_name||' , '||email||' , '||phone_number||' , '||job_id||' ,, '||hire_date||' ,, '||salary||' ,, '||department_id "the_output" from employees;
+
