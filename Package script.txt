@@ -1,0 +1,88 @@
+--Pacakages
+
+create or replace package pkg as
+procedure employee_info(no in number,info out emp%rowtype);
+function sumofn(n number)return number;
+end pkg;
+
+create or replace package body pkg as
+procedure employee_info(no in number,info out emp%rowtype)is
+begin
+select * into info from emp where empno = no;
+end;
+function sumofn(n number) return number is
+a number;
+begin
+a:=n*(n+1)/2;
+return a;
+end;
+end pkg;
+/
+show errors;
+
+set serveroutput on
+declare
+info emp%rowtype;
+b number;
+a number:=10;
+begin
+pkg.employee_info(7369,info);
+dbms_output.put_line('procedure result');
+dbms_output.put_line(info.empno||'    '||info.ename||'     '||info.sal);
+
+b:=pkg.sumofn(a);
+dbms_output.put_line('Function Result '||b);
+end;
+
+
+create or replace package min_max as
+
+function mini(a in number,b in number)return number;
+procedure maxi(a in number, b in number);
+function even_odd(a in number)return varchar2;
+end min_max;
+
+create or replace package body min_max as
+function mini(a in number,b in number)return number is
+c number;
+begin
+if (a > b) then
+return b;
+else 
+return a;
+end if;
+end;
+
+procedure maxi(a in number, b in number)is
+begin
+ if (a >b) then
+ dbms_output.put_line(a||' is greater than '||b);
+  else
+  dbms_output.put_line(b||' is greater than '||a);
+end if;
+end;
+
+function even_odd(a in number)return varchar2 is
+
+begin
+ if (mod(a,2)=0) then
+ return 'Even';
+ else 
+ return 'Odd';
+ end if;
+ end;
+ end;
+set serveroutput on;
+declare
+
+a number:=10;
+b number:=20;
+c number;
+d varchar2(20);
+begin
+c:=min_max.mini(a,b);
+dbms_output.put_line('the funtion mini result is '||c);
+min_max.maxi(a,b);
+d:=min_max.even_odd(a);
+dbms_output.put_line('the funtion even_odd result is '||d);
+end;

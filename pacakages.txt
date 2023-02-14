@@ -1,0 +1,126 @@
+// package creation
+create or replace package pkg
+as
+procedure employee(no in number,info out emp%rowtype);
+function sumofn(n number)
+return number;
+end pkg;
+
+
+
+// package body
+
+create or replace package body pkg
+as
+procedure employee(no in number,info out emp%rowtype)
+is
+begin
+select * into info from emp where empno=no;
+end
+function sumofn(n number) return number
+is
+a number;
+begin
+a:n*(n+1)/2;
+return a;
+end;
+end pkg;
+
+
+set serveroutput on
+declare
+info emp%rowtype;
+b number;
+a number:=10;
+begin
+pkg.employee(7369,info);
+dbms_output.put_line('procedure result');
+end;
+
+
+
+
+
+CREATE OR REPLACE PACKAGE pkg IS
+  n NUMBER := 5;
+END pkg;
+/
+
+CREATE OR REPLACE PACKAGE sr_pkg IS
+  PRAGMA SERIALLY_REUSABLE;
+  n NUMBER := 5;
+END sr_pkg;
+/
+
+BEGIN
+  pkg.n := 10;
+  sr_pkg.n := 10;
+END;
+/
+set serveroutput on;
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('pkg.n: ' || pkg.n);
+  DBMS_OUTPUT.PUT_LINE('sr_pkg.n: ' || sr_pkg.n);
+END;
+/
+
+
+Drop table people
+CREATE TABLE people (name VARCHAR2(20));
+ 
+INSERT INTO people (name) VALUES ('John Smith');
+INSERT INTO people (name) VALUES ('Mary Jones');
+INSERT INTO people (name) VALUES ('Joe Brown');
+INSERT INTO people (name) VALUES ('Jane White');
+
+CREATE OR REPLACE PACKAGE sr_pkg IS
+  PRAGMA SERIALLY_REUSABLE;
+  CURSOR c IS SELECT name FROM people;
+END sr_pkg;
+
+set serveroutput on; 
+CREATE OR REPLACE PROCEDURE fetch_from_cursor IS
+  v_name  people.name%TYPE;
+BEGIN
+  IF sr_pkg.c%ISOPEN THEN
+    DBMS_OUTPUT.PUT_LINE('Cursor is open.');
+  ELSE
+    DBMS_OUTPUT.PUT_LINE('Cursor is closed; opening now.');
+    OPEN sr_pkg.c;
+  END IF;
+ 
+  FETCH sr_pkg.c INTO v_name;
+  DBMS_OUTPUT.PUT_LINE('Fetched: ' || v_name);
+  
+  FETCH sr_pkg.c INTO v_name;
+  DBMS_OUTPUT.PUT_LINE('Fetched: ' || v_name); 
+
+  END fetch_from_cursor;
+
+
+BEGIN
+  fetch_from_cursor;
+  fetch_from_cursor;
+END;
+/
+
+
+
+CREATE PACKAGE emp_bonus AS
+  PROCEDURE calc_bonus (date_hired employees.hire_date%TYPE);
+END emp_bonus;
+
+CREATE OR REPLACE PACKAGE BODY emp_bonus AS
+  PROCEDURE calc_bonus
+    (date_hired employees.hire_date%TYPE) IS
+  BEGIN
+    DBMS_OUTPUT.PUT_LINE('Employees hired on ' || date_hired || ' get bonus.');
+  END;
+END emp_bonus;
+
+
+set serveroutput on;
+begin
+emp_bonus.calc_bonus('07-DEC-22');
+end;
+select hire_date from employees;

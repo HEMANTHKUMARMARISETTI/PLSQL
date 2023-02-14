@@ -1,0 +1,57 @@
+30-11-2022
+
+select last_name, UPPER(CONCAT(SUBSTR(LAST_NAME,1,8),'US') from employees
+where department_id=60;
+
+--------------------------------------------------------------------------
+
+GENERAL FUNCTIONS:
+
+->NVL:replace specified value with null,if not returns same value.
+->NVL takes one argument
+
+ex1: select last_name,salary,NVL(commission_pct,0) AN_SAL from employees;
+ex2: select last_name,salary,NVL(commission_pct,0),(salary*12)+(salary*12*NVL(commmission_pct,0)) AN_SAL from employees;
+
+->NVL2:if there is a null,replace with 2nd argument,if not replace with 1st argument.
+
+ex1:select last_name,salary,commission_pct,NVL2(commission_pct,salary+commission_pct,salary) income from employees;
+
+->NULLIF:if 1st arg and 2nd arg are same returns null or the result is same.
+
+ex1:select first_name,length(first_name) "exp1",
+           last_name ,length(last_name) "exp2",
+           NULLIF(length(first_name,last_name)) result
+    from employees;
+
+----------------------------------------------------------------------------
+AGGREGATE FUNCTIONS:
+
+"avg,min,max,count" using distinct keyword
+
+        select count(distinct employee_id) from employees; //returns 107
+        select count(commission_pct) from employees; //returns 35
+MAX ex: select max(salary) from employees;//works for char,num..etc
+MIN ex: select min(salary) from employees;//works for char,num..etc
+SUM ex: select to_char(sum(salary)*12,'$99,99,999') from employees;//returns $82,96,992 works for char,num..etc
+AVG ex: select avg(salary) from employees;//works for char,num..etc
+
+**select department_id,count(*),min(salary),max(salary),round(avg(salary)),sum(salary) from employees
+group by department_id order by 1;**
+
+**select job_id,count(*),min(salary),max(salary),round(avg(salary)),sum(salary) from employees
+group by job_id 
+having count(*)>=10
+order by 4 desc;**
+
+**select department_id,count(department_id),max(salary),min(salary),round(avg(salary)) from employees
+  group by 
+  having department_id is not null and department_id>50
+  department_id order by 1;**
+
+
+TYPED BY SRI SRI MARISETTI HEMANTHKUMAR 
+thanks tharuvatha chepandi 
+        
+
+
