@@ -1,0 +1,71 @@
+create or replace package pack as
+function add1(a number,b number)return number;
+end;
+
+create or replace package body pack as
+function add1(a number,b number)return number is c number;
+begin
+c:=a+b;
+return c;
+end;
+end pack;
+
+declare
+a number:=10;
+b number:=20;
+c number;
+begin
+c:=pack.add1(a,b);
+dbms_output.put_line('addition of'||a||' and '||b||' is '||c);
+end;
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+create or replace package pack1 as
+procedure add2(a in number,b in number,c out number);
+end;
+
+create or replace package body pack1 as
+procedure add2(a in number,b in number,c out number) is
+begin
+c:=a+b;
+end;
+end;
+
+declare
+a number:=10;
+b number:=20;
+c number;
+begin
+pack1.add2(a,b,c);
+dbms_output.put_line('addition of'||a||' and '||b||' is '||c);
+end;
+------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------
+create or replace package pack3 as
+function totalcustomers1 return number;
+procedure totalcustomers2;
+end ;
+
+create or replace package body pack3 as
+FUNCTION totalcustomers1 RETURN number IS 
+   total1 number(5):= 0; 
+begin
+select count(*) into total1 from employees ;
+return total1;
+end;
+procedure totalcustomers2 as
+total1 number(5);
+begin
+select count(*) into total1 from employees ;
+end;
+end;
+
+declare
+c number(5);
+begin
+c:=pack3.totalcustomers1();
+dbms_output.put_line('count by function is '||c);
+
+end;
+
+

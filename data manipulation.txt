@@ -1,0 +1,39 @@
+7-12-2022
+
+DATA MANIPULATION
+
+->DML only works on tables
+->DDL only works on objects(views)
+
+------------------------------------------------------------------------------------------------------
+INSERT
+ex: insert into departments values(280,'harware',100,1700);
+ex: insert into departments (department_id,department_name,location_id) 
+    values (290,'research',1700);
+ex: insert into departments (department_id,department_name,location_id) 
+    values (&department_id,'&department_name',&location_id);
+ex: insert into departments (department_id,department_name,location_id,manager_id) 
+    values (290,'research',1700,null);
+
+********savepoint I;***************
+
+ex:insert into departments (manager_id) values(108) where department_id=310;//error:var class cannot be used
+
+ex:update departments set manager_id=108;
+
+*******rollback to i;************************
+
+ex:update departments set manager_id=108 where department_id=310;//updated
+
+*******savepoint u1;*************************
+
+CREATE
+
+ex:create table sales_rep(id int,name varchar2(20),salary int,commission_pct float);
+ex:create table copy_empm as select * from employees;
+
+*******delete from copy_emp;****************delete from copy_emp where employee_id=1104;
+*******drop table copy_emp;*****************
+
+update works on columns;
+delete works on statements;

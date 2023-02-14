@@ -1,0 +1,22 @@
+Packages: code reusability,procedure,function
+
+create or replace package pkg as
+procedure employee_info(no in number,info out emp%rowtype);
+function sumofn(n number)return number;
+end pkg;
+
+create or replace package body pkg as
+procedure employee_info(no in number,info out emp%rowtype)
+is
+begin
+select * into info from emp where empno=no;
+end;
+function sumofn(n number) return number is
+a number;
+begin
+a:=n*(n+1)/2;
+
+return a;
+end;
+end pkg;
+

@@ -1,0 +1,117 @@
+declare
+
+a number:=5;
+i number:=0;
+c number(2);
+begin
+dbms_output.put_line('Multiplication Table of '||a);
+while(i<=10)
+loop
+c:=a*i;
+dbms_output.put_line(a||' x '||i||' = '||c);
+i:=i+1;
+end loop;
+end;
+
+----------------------------------------------------------------------------------
+declare
+
+a number:=1;
+i number:=1;
+c number;
+n number:=10;
+begin
+dbms_output.put_line('Multiplication Table of '||a);
+for b in a..n
+loop
+   i:=1;
+   while(i<=10)
+      loop
+      c:=b*i;
+      dbms_output.put_line(b||' x '||i||' = '||c);
+      i:=i+1;
+    end loop;
+    dbms_output.put_line('-----------------------------------');
+
+end loop;
+end;
+------------------------------------------------------------------------------------
+create or replace function adder(a in number, b in number)    
+return number
+is
+c number;
+begin
+c:=a+b;
+return c;
+end;
+
+declare
+c number;
+begin
+c:=adder(1,2);
+dbms_output.put_line(c);
+end;
+
+---------------------------------------------------------------------------------------------------------------------------------------
+create or replace function maxi(a in number,b in number)
+return number
+is
+begin
+if(a>b) then
+return a;
+else
+return b;
+end if;
+end;
+
+declare
+a number:=1;
+b number:=2;
+c number;
+begin
+c:=maxi(a,b);
+dbms_output.put_line('max number is '||c);
+end;
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+select count(*) from employees;
+
+create or replace function total
+return number
+is
+total number;
+begin
+select count(*) into total 
+from
+employees;
+return total;
+end;
+
+declare
+c number;
+begin
+c:=total();
+dbms_output.put_line(c);
+end;
+---------------------------------------------------------------------------------------------------
+create table customers(id number(2),name varchar2(10),age number(2),address varchar2(20),salary number(6));
+-----table created
+insert into customers values(1,'ramesh',23,'allahabad',25000);
+insert into customers values(2,'suresh',22,'khanpur',27000);
+insert into customers values(3,'mahesh',24,'ghaziabad',29000);
+insert into customers values(4,'chandhan',25,'noida',31000);
+-----values inserted
+select * from customers order by id;
+-----total data readed
+declare
+total_rows number(2);
+begin
+update customers
+set salary=salary+5000;
+if sql%notfound then
+dbms_output.put_line('no customers updated');  
+elsif sql%found then
+total_rows := sql%rowcount;  
+      dbms_output.put_line( total_rows || ' customers updated ');  
+      end if;
+      end;

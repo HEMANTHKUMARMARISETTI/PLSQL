@@ -1,0 +1,30 @@
+--practice 5
+-- Find the highest, lowest, sum, and average salary of all employees. Label the columns
+--as Maximum, Minimum, Sum, and Average, respectively. Round your results to the nearest 
+--whole number. Save your SQL statement as lab_05_04.sql. Run the query
+select round(max(salary)) "MAXIMUM",round(min(salary)) "MINIMUM",round(sum(salary)) "SUM",round(avg(salary)) "AVERAGE" from employees;
+
+-- Modify the query in lab_05_04.sql to display the minimum, maximum, sum, and average 
+--salary for each job type. Resave lab_05_04.sql as lab_05_05.sql. Run the statement 
+--in lab_05_05.sql
+select job_id,round(max(salary)) "MAXIMUM",round(min(salary)) "MINIMUM",round(sum(salary)) "SUM",round(avg(salary)) "AVERAGE"
+  from employees group by job_id order by 1;
+
+--  Write a query to display the number of people with the same job
+select job_id,count(*) from employees group by job_id;
+
+--Generalize the query so that the user in the HR department is prompted for a job title. Save the 
+--script to a file named lab_05_06.sql. Run the query. Enter IT_PROG when prompted.
+SELECT job_id, COUNT(*) FROM   employees WHERE  job_id = '&job_title' GROUP BY job_id;
+
+--Determine the number of managers without listing them. Label the column as Number of 
+--Managers. Hint: Use the MANAGER_ID column to determine the number of managers
+SELECT COUNT(DISTINCT manager_id) "Number of Managers" FROM   employees;
+
+-- Find the difference between the highest and lowest salaries. Label the column DIFFERENCE
+select max(salary)-min(salary) DIFFERENCE from employees; 
+
+--Create a report to display the manager number and the salary of the lowest-paid employee for 
+--that manager. Exclude anyone whose manager is not known. Exclude any groups where the 
+--minimum salary is $6,000 or less. Sort the output in descending order of salary
+select manager_id,min(salary) from employees where salary>6000 group by;

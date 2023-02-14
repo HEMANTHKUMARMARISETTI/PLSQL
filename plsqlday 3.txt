@@ -1,0 +1,56 @@
+declare
+totalrows number(3);
+begin
+select count(*) into totalrows from employees;
+if sql%notfound then
+dbms_output.put_line('not present');
+elsif sql%found then
+dbms_output.put_line(' present');
+end if;
+end;
+----------------------------------------------------------------------------------
+declare                                            ------------> IMPLICIT
+em_rec emp%rowtype;
+cursor empcur is select * from emp;
+begin
+open empcur;
+loop
+fetch empcur into emp_rec;
+exit when empcur%notfound;
+dbms_output.put_line(emp_rec.empno)
+end loop;
+close empcur;
+end;
+
+declare
+eno emp.empno%type;
+cursor empcur is select empno from emp;
+begin
+open empcur;
+loop
+fetch empcur into empno;
+exit when empcur%notfound;
+dbms_output.put_line(emp_rec.empno);
+end loop;
+close empcur;
+end;
+----------------------------------------------------------------------------------
+declare                                -------------------------------->EXPLICIT
+emprec emp%rowtype;
+s1 sys_refcursor;
+
+cursor s1;
+
+
+begin
+
+
+open s1 for select * from emp;
+
+loop
+fectch s1 into emprec;
+exit when s1%notfound
+dbms_output.put_line(emprec.empno);
+end loop;
+close s1;
+end

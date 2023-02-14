@@ -1,0 +1,24 @@
+--Create the DEPT table based on the following table instance chart. Save the statement in a 
+--script called lab_10_01.sql, and then execute the statement in the script to create the table. 
+--Confirm that the table is created
+drop table dept;
+create table dept (id number(7) constraints pk_id primary key,name varchar2(25));
+desc dept;
+
+--Populate the DEPT table with data from the DEPARTMENTS table. Include only columns that you need
+insert into dept 
+select department_id,department_name from departments;
+select * from dept;
+
+-- Create the EMP table based on the following table instance chart. Save the statement in
+--a script called lab_10_03.sql, and then execute the statement in the script to create the 
+--table. Confirm that the table is created.
+create table emp(id number(7),last_name varchar2(25),first_name varchar2(25),dept_id number(7) ,
+constraint fk_id foreign key(dept_id) references dept(id));
+--Create the EMPLOYEES2 table based on the structure of the EMPLOYEES table. Include only 
+--the EMPLOYEE_ID, FIRST_NAME, LAST_NAME, SALARY, and DEPARTMENT_ID
+--columns. Name the columns in your new table ID, FIRST_NAME, LAST_NAME, SALARY, 
+--and DEPT_ID, respectively
+create table employee2(id number(20),first_name varchar2(25),last_name varchar2(25),salary number(10),dept_id number(10));
+insert into employee2
+select employee_id,first_name,last_name,salary,department_id from employees;

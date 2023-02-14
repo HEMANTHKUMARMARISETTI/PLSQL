@@ -1,0 +1,55 @@
+--part 1
+SELECT last_name, job_id, salary AS Sal
+FROM employees;--executes successfully ans=true
+
+SELECT * 
+FROM job_grades;--executes unsuccessfully ans=false if imported true
+
+SELECT employee_id, last_name,
+salary * 12 as ANNUALSALARY
+FROM employees;--errors: , as * salary annualsalary
+
+--part2
+
+--4
+--Your first task is to determine the structure of the DEPARTMENTS table and its contents
+desc departments;
+
+select department_id,department_name,manager_id,location_id from departments;
+
+-- You need to determine the structure of the EMPLOYEES table
+desc employees;
+
+--The HR department wants a query to display the last name, job code, hire date, and employee 
+--number for each employee, with the employee number appearing first. Provide an alias 
+--STARTDATE for the HIRE_DATE column. Save your SQL statement to a file named 
+--lab_01_05.sql so that you can dispatch this file to the HR department.
+--Test your query in the lab_01_05.sql file to ensure that it runs correctly.
+--Note: After you have executed the query, make sure that you do not enter your next query in 
+--the same worksheet. Open a new worksheet
+select employee_id ,job_id,last_name,hire_date as STARTDATE from employees;
+
+-- The HR department wants a query to display all unique job codes from the EMPLOYEES table
+select distinct job_id from employees;
+
+-- The HR department wants more descriptive column headings for its report on employees. Copy 
+--the statement from lab_01_05.sql to a new SQL Worksheet. Name the column headings 
+--Emp #, Employee, Job, and Hire Date, respectively. Then run your query again
+select employee_id as Emp#,last_name as Employee,job_id as job,hire_date as "Hire Date" from employees;
+
+--The HR department has requested a report of all employees and their job IDs. Display the last 
+--name concatenated with the job ID (separated by a comma and space) and name the column 
+--Employee and Title
+select last_name||','||job_id  
+"Employee and Title" 
+from employees;
+
+--To familiarize yourself with the data in the EMPLOYEES table, create a query to display all the 
+--data from that table. Separate each column output by a comma. Name the column title 
+--THE_OUTPUT.
+select employee_id||','||first_name||','||last_name||','||email||','||phone_number||','||job_id||','||hire_date||','||salary||',,'||department_id as THE_OUTPUT from employees;
+
+
+
+
+

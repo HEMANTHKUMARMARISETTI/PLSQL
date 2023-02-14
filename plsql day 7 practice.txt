@@ -1,0 +1,80 @@
+declare
+err varchar2(20);
+begin
+select last_name into err from employees;
+dbms_output.put_line('last names are '||err);
+exception
+when too_many_rows then
+dbms_output.put_line('returning more than requested number of rows');
+end;
+--------------------------------------------------------------------------------
+declare 
+err varchar2(20);
+begin
+select salary into err from employees;
+dbms_output.put_line('ids are '||err);
+exception
+when too_many_rows then
+dbms_output.put_line('returning more than requested number of rows');
+end;
+--------------------------------------------------------------------------------
+declare
+nameis varchar2(20);
+begin
+select last_name into nameis from employees where last_name='hemanth';
+exception
+when no_data_found then
+dbms_output.put_line('error');
+dbms_output.put_line('there is no name as hemanth in last_name');
+end;
+--------------------------------------------------------------------------------
+DECLARE
+   temp number;   
+  
+BEGIN
+   SELECT last_name into temp from employees where employee_id=100;
+   dbms_output.put_line('the g_name is '||temp);
+  
+EXCEPTION
+   WHEN value_error THEN
+   dbms_output.put_line('Error');
+   dbms_output.put_line('Change data type of temp to varchar(20)');
+  
+END;
+----------------------------------------------------------------------------------
+declare
+a number:=10;
+b number:=0;
+c number;
+begin
+c:=a/b;
+dbms_output.put_line(c);
+exception
+when zero_divide then
+dbms_output.put_line('error b should not be zero');
+end;
+--------------------------------------------------------------------------------
+declare
+a exception;
+pragma exception_init(a,-20015);
+name1 varchar2(20);
+begin
+select last_name into name1 from employees where employee_id=100;
+raise a;
+exception
+when a then
+dbms_output.put_line('the data is not available');
+dbms_output.put_line(SQLERRM);
+end;
+-------------------------------------------------------------------------------
+declare
+a exception;
+name1 varchar2(20);
+begin
+select last_name into name1 from employees where last_name='hemanth';
+raise a;
+exception
+when a then
+dbms_output.put_line('the data is not available');
+end;
+--------------------------------------------------------------------------------

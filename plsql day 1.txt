@@ -1,0 +1,85 @@
+declare 
+a number(2):=20;
+b number(2):=20;
+
+
+begin
+
+if (a>b) then
+dbms_output.put_line('The max is '||a);
+else
+dbms_output.put_line('The max is '||b);
+end if;
+end;
+
+------------------------------------------------------------------------------------
+
+declare 
+a number(2):=20;
+
+begin
+
+if (a mod 2 =0) then
+dbms_output.put_line('The given number'||a||' is even ');
+else
+dbms_output.put_line('The given number'||a||' odd ');
+end if;
+end;
+
+------------------------------------------------------------------------------------
+
+
+declare
+fn varchar2(20);
+begin
+
+select first_name into fn from employees where employee_id=1001;
+
+dbms_output.put_line('the employee name is '||fn);
+
+exception
+
+when no_data_found then
+
+dbms_output.put_line('the employee name'||fn||' doesnot exist');
+
+end;
+
+------------------------------------------------------------------------------------
+
+declare
+
+r employee%rowtype;
+c employees.first_name%type;
+
+begin
+
+select * into r from employees where employee_id=100;
+select first_name into c from employees where employee_id=101;
+
+dbms_output.put_line('the row values are '||r.employee_id||' '||r.first_name||' '||r.salary||' '||r.department_id);
+
+dbms_output.put_line('column value is '||c);
+
+end;
+
+------------------------------------------------------------------------------------
+
+declare
+
+begin
+
+   for a in 1..20 loop
+     dbms_output.put_line('value of a: '||a);
+   end loop;
+end;
+
+declare
+
+begin
+
+   for a in reverse 1..20 loop
+     dbms_output.put_line('value of a: '||a);
+   end loop;
+end;
+

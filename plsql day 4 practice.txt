@@ -1,0 +1,116 @@
+declare
+totalrows number;
+begin
+select count(*) into totalrows from employees;
+if sql%notfound then
+dbms_output.put_line('not present');
+elsif sql%found then
+dbms_output.put_line(totalrows||' present');
+end if;
+end;
+--------------------------------------------------------------------------------------------------
+select * from customers;
+
+declare 
+
+begin
+update customers
+set salary=salary+5000;
+if sql%found then
+dbms_output.put_line('salary changed');
+elsif sql%notfound then 
+dbms_output.put_line('salary not changed data not found');
+end if;
+end;
+-----------------------------------------------------------------------------------------------------
+declare 
+
+begin
+update customers
+set age=age+10;
+if sql%found then
+dbms_output.put_line('age changed');
+elsif sql%notfound then 
+dbms_output.put_line('age not changed data not found');
+end if;
+end;
+-----------------------------------------------------------------------------------------------------
+declare
+em_rec employees%rowtype;
+cursor empcur is select * from employees;
+begin
+open empcur;
+loop
+fetch empcur into em_rec;
+exit when empcur%notfound;
+dbms_output.put_line(em_rec.employee_id);
+end loop;
+close empcur;
+end;
+-------------------------------------------------------------------------------------------------------
+declare
+em_rec employees%rowtype;
+cursor empcur is select * from employees;
+begin
+open empcur;
+loop
+fetch empcur into em_rec;
+exit when empcur%notfound;
+dbms_output.put_line(em_rec.employee_id||'  'em_rec.last_name);
+end loop;
+close empcur;
+end;
+-------------------------------------------------------------------------------------------------------
+declare
+customer_rec customers%rowtype;
+cursor customer_cur is select * from customers;
+begin
+open customer_cur;
+loop
+fetch customer_cur into customer_rec;
+exit when customer_cur%notfound;
+dbms_output.put_line(customer_rec.ID||' '||customer_rec.name||' '||customer_rec.age||' '||customer_rec.salary);
+end loop;
+close customer_cur;
+end;
+--------------------------------------------------------------------------------------------------------
+declare
+cid customers.id%type;
+naam customers.name%type;
+sal customers.salary%type;
+cursor customer_cur is select id,name,salary from customers;
+begin
+open customer_cur;
+loop
+fetch customer_cur into cid,naam,sal;
+exit when customer_cur%notfound;
+dbms_output.put_line(cid||' '||naam||' '||sal);
+end loop;
+close customer_cur;
+end;
+--------------------------------------------------------------------------------------------------------
+declare
+cid customers.id%type;
+naam customers.name%type;
+sal customers.salary%type;
+cursor customer_cur is select id,name,salary from customers;
+em_rec employees%rowtype;
+cursor empcur is select * from employees;
+begin
+open customer_cur;
+loop
+fetch customer_cur into cid,naam,sal;
+exit when customer_cur%notfound;
+dbms_output.put_line(cid||' '||naam||' '||sal);
+end loop;
+close customer_cur;
+dbms_output.put_line('--------------------------------------------------------');
+open empcur;
+loop
+fetch empcur into em_rec;
+exit when empcur%notfound;
+
+dbms_output.put_line(em_rec.employee_id||em_rec.last_name||em_rec.first_name);
+end loop;
+close empcur;
+end;

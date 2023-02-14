@@ -1,0 +1,41 @@
+declare
+last1_name employees.last_name%type;
+first1_name employees.first_name%type;
+i number:=0;
+cursor hemanth is select last_name,first_name from employees;
+begin
+open hemanth;
+loop
+fetch hemanth into last1_name,first1_name;
+if hemanth%notfound
+then
+exit;
+end if;
+dbms_output.put_line('employee '||i||' is '||last1_name||' '||first1_name);
+end loop;
+dbms_output.put_line('Total rows fetched is '||hemanth%rowcount);
+close hemanth;
+end; 
+
+----------------------------------------------------------------------------------
+declare
+last1_name employees.last_name%type;
+first1_name employees.first_name%type;
+sal employees.salary%type;
+i number:=1;
+cursor hemanth is select last_name,first_name,salary from employees where salary>20000;
+begin
+open hemanth;
+loop
+fetch hemanth into last1_name,first1_name,sal;
+if hemanth%notfound then
+exit;
+end if;
+dbms_output.put_line('employee '||i||' is '||last1_name||' '||first1_name||'salary is '||sal);
+i:=i+1;
+
+end loop;
+dbms_output.put_line('Total rows fetched is '||hemanth%rowcount);
+close hemanth;
+end; 
+-----------------------------------------------------------------------------------

@@ -1,0 +1,118 @@
+declare
+
+var1 number:=200;
+var1 number:=1;
+begin
+
+while(var2<=10)
+loop
+dbms_output.put_line(var1*var2);
+var2:=var2+1;
+end loop;
+end;
+
+
+begin
+
+for n_index in 1..10
+loop
+  if mod(n_index,2)=1 then
+     continue;
+  else
+     dbms_output.put_line(n_index);
+  end if;
+  end loop;
+end;
+
+---------------------------------------------------------------------------------------------------
+
+FUNCTIONS
+
+create or replace function maxi(x in number,y in number) return number is
+
+begin
+
+if (x>y) then
+return x;
+else
+return y;
+end;
+show errors;
+
+declare 
+a number:=10;
+b number:=20;
+c number;
+begin
+c:=maxi(a,b);
+dbms_output.put_line(C);
+end;
+---------------------------------------------------------------------------------------------------
+create or replace function ename(eid in int) return varchar2 is
+en varchar2(20);
+begin
+select ename into en from emp where emp where empno=eid;
+return en;
+end;
+
+declare 
+em emp.empno%type:=7369;
+e varchar2(20);
+begin
+e:=ename(em);
+dbms_output.put_line(e);
+end;
+---------------------------------------------------------------------------------------------------
+create or replace function maxi(x in number,y in number,z out number) return number is
+
+begin
+
+if (x>y) then
+return z:=x;
+else
+return z:=y;
+end if;
+end;
+show errors;
+
+declare 
+
+c number;
+begin
+exec maxi(10,20,c);
+dbms_output.put_line(C);
+end;
+
+---------------------------------------------------------------------------------------------------
+create or replace procedure sqr(x in out number) is
+begin
+x:=x*x;
+end;
+
+declare
+a number:=20;
+begin
+sqr(a);
+dbms_output.put_line(a);
+end;
+---------------------------------------------------------------------------------------------------
+create or replace procedure esal(ename in varchar2,sa out number) is
+
+begin
+select sal into sa from emp where ename =en;
+end;
+declare
+sa emp.sal%TYpe;
+begin
+esal('smith',sa);
+dbms_output.put_line('salary'||sa);
+end;
+---------------------------------------------------------------------------------------------------
+create or replace procedure greetings as
+begin
+
+end;
+exec greetings;
+declare
+sa emp.sal%type;
+

@@ -1,0 +1,82 @@
+create table my_employee(id number(4),last_name varchar2(25),first_name varchar2(25),userid varchar2(8),salary number(9,2));
+drop table my_employee;
+--The HR department wants you to create SQL statements to insert, update, and delete employee data. 
+--As a prototype, you use the MY_EMPLOYEE table before giving the statements to the HR department.
+--Note: For all the DML statements, use the Run Script icon (or press [F5]) to execute the query. This 
+--you get to see the feedback messages on the Script Output tab page. For SELECT queries, 
+--continue to use the Execute Statement icon or press [F9] to get the formatted output on the Results tab page.
+--Insert data into the MY_EMPLOYEE table.
+--1. Run the statement in the lab_09_01.sql script to build the MY_EMPLOYEE table used in this practice.
+--2. Describe the structure of the MY_EMPLOYEE table to identify the column names
+desc my_employee;
+--3. Create an INSERT statement to add the first row of data to the MY_EMPLOYEE table from the 
+--following sample data. Do not list the columns in the INSERT clause. Do not enter all rows ye
+insert into my_employee values(1,'Patel','Ralph','rpatel',895);
+insert into my_employee values(2,'Dancs','Betty','bdancs',860);
+insert into my_employee values(3,'biri','Ben','bbiri',1100);
+insert into my_employee values(4,'Newman','chad','cnewman',750);
+insert into my_employee values(5,'Ropeburn','Audrey','aropebur',1550);
+select * from my_employee order by id asc;
+--Populate the MY_EMPLOYEE table with the second row of the sample data from the preceding
+--list. This time, list the columns explicitly in the INSERT clause
+delete from my_employee;
+insert into my_employee(id,last_name,first_name,userid,salary) values(2,'Dancs','Betty','bdancs',860);
+select * from my_employee;
+--Confirm your addition to the table
+insert into my_employee(id,last_name,first_name,userid,salary) values(1,'Patel','Ralph','rpatel',895);
+select * from my_employee order by id asc;
+--Write an INSERT statement in a dynamic reusable script file to load the remaining rows into the 
+--MY_EMPLOYEE table. The script should prompt for all the columns (ID, LAST_NAME, 
+--FIRST_NAME, USERID, and SALARY). Save this script to a lab_09_06.sql file
+INSERT INTO my_employee VALUES (&p_id, '&p_last_name', '&p_first_name', '&p_userid', &p_salary);
+--Populate the table with the next two rows of the sample data listed in step 3 by running the 
+--INSERT statement in the script that you created.
+insert into my_employee(id,last_name,first_name,userid,salary) values(3,'biri','Ben','bbiri',1100);
+insert into my_employee(id,last_name,first_name,userid,salary) values(4,'Newman','chad','cnewman',750);
+--Confirm your additions to the table
+select * from my_employee order by id asc;
+-- Make the data additions permanent
+commit;
+--Change the last name of employee 3 to Drexler
+update my_employee set last_name='Dexler' where id=3;
+--Change the salary to $1,000 for all employees who have a salary less than $900
+update my_employee set salary=1000 where salary<1000;
+-- Verify your changes to the table
+select * from my_employee order by id asc;
+--Delete Betty Dancs from the MY_EMPLOYEE table
+delete from my_employee where id=2;
+--Confirm your changes to the table.
+select * from my_employee order by id asc;
+--Commit all pending changes.
+commit;
+--Populate the table with the last row of the sample data listed in step 3 by using the statements 
+--in the script that you created in step 6. Run the statements in the script
+insert into my_employee(id,last_name,first_name,userid,salary) values(5,'Ropeburn','Audrey','aropebur',1550);
+--step:18 Confirm your addition to the table
+select * from my_employee order by id asc;
+--Mark an intermediate point in the processing of the transaction
+savepoint s18;
+--Delete all the rows from the MY_EMPLOYEE table.
+delete from my_employee;
+--. Confirm that the table is empty.
+select * from my_employee;
+-- Discard the most recent DELETE operation without discarding the earlier INSERT operation
+rollback to s18;
+--Confirm that the new row is still intact
+select * from my_employee order by id asc;
+--take the data addition permanent.
+commit;
+-- Modify the lab_09_06.sql script such that the USERID is generated automatically by 
+--concatenating the first letter of the first name and the first seven characters of the last name. 
+--The generated USERID must be in lowercase. Hence, the script should not prompt for the 
+--USERID. Save this script to a file named lab_09_24.sql.
+insert into my_employee(id,last_name,first_name,userid,salary) VALUES(6,'Anthony','Mark',null,1230);            
+update my_employee
+set userid=LOWER(SUBSTR(first_name,1,1) || SUBSTR(last_name,1,7))
+where userid is null;
+--Run the script, lab_09_24.sql to insert the following record
+select * from my_employee where id=6;
+--Confirm that the new row was added with correct USERID.
+select * from my_employee;
+commit;
+

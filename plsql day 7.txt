@@ -1,0 +1,66 @@
+EXCEPTION
+
+declare
+
+jb varchar2(20);---single value
+
+begin
+select job into jb from employees;---multiple values
+dbms_output.put_line('the job is '||jb);
+
+end;
+
+**********after edit**************\
+
+declare
+
+jb varchar2(20);---single value
+
+begin
+select job into jb from employees;---multiple values
+dbms_output.put_line('the job is '||jb);
+exception
+when too_many_rows then
+dbms_output.put_line('We are retreiving multiple values of job');
+end;
+
+output: We are retreiving multiple values of job
+
+declare
+
+jb varchar2(20);---single value
+
+begin
+select job into jb from employees where employee_id=1;---multiple values
+dbms_output.put_line('the job is '||jb);
+exception
+when too_many_rows then
+dbms_output.put_line('We are retreiving multiple values of job');
+end;
+-----------------------------------------------------------------------------------------------
+PRAGMA EXCEPTION_INIT
+
+declare 
+a exception;
+pragma exception_init(a,-20999);
+begin
+select job_id into jb from employees where employee_id=10;
+raise a;
+exception
+when a then
+dbms_output.put_line('the data is not available');
+dbms_output.put_line(SQLERRM);
+end;
+--------------------------------------------------------------------------------------------------
+declare 
+
+begin
+select job_id into jb from employees where employee_id=10;
+if sql%found then
+raise_application_error(-20001,'Record available');
+end if;
+exception
+when others then
+dbms_output.put_line('the data is not available');
+dbms_output.put_line(SQLERRM);
+end;

@@ -1,0 +1,97 @@
+--addition of two numbers
+declare
+
+a number(2):=20;
+b number(2):=20;
+c number(2);
+
+begin
+c:=a+b;
+dbms_output.put_line('addition of '||a||' and '||b||' is '||c);
+
+end;
+
+--greater or lesser or equal
+
+declare
+
+a number(2):=20;
+b number(2):=20;
+
+begin
+
+if(a>b) then
+
+dbms_output.put_line('the given numbers '||a||' is greater then '||b);
+
+elsif(a<b) then
+
+dbms_output.put_line('the given numbers '||a||' is lesser then '||b);
+
+else
+
+dbms_output.put_line('the given numbers '||a||' is equal to '||b);
+
+end if;
+
+end;
+
+--palindrome
+
+declare
+
+num number(3):=121;
+revers number(3):=0;
+remen number(3);
+temp number(3);
+
+begin
+temp:=num;
+while (temp>0) loop
+   remen := mod(temp,10);
+   revers:= revers*10+remen;
+   temp:=trunc(temp/10);
+end loop;
+
+if num=revers then
+dbms_output.put_line(num||' is a palindrome number');
+else
+dbms_output.put_line(num||' is not a palindrome number');
+end if;
+end;
+
+--armstrong
+declare
+
+num number(3):=153;
+revers number(3):=0;
+remen number(3);
+temp number(3);
+
+begin
+temp:=num;
+while (temp>0) loop
+   remen := mod(temp,10);
+   revers:=revers+ remen*remen*remen;
+   temp:=trunc(temp/10);
+end loop;
+
+if num=revers then
+dbms_output.put_line(num||' is a armstrong number');
+else
+dbms_output.put_line(num||' is not a armstrong number');
+end if;
+end;
+
+--MULTIPLICATION TABLE
+declare
+
+num number(3):=5;
+
+begin
+
+for 
+
+
+
+
