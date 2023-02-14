@@ -1,0 +1,36 @@
+SET OPERATORS
+
+UNION---------------
+
+**select employee_id,job_id from employees;
+union
+select employee_id,job_id from job_history;
+
+**select employee_id,job_id from employees;
+union all
+select employee_id,job_id from job_history;//should give same datatype for union
+
+**desc job_history;
+desc employees;
+
+**union doesnot eliminates duplicates
+**union all displays duplicates
+
+INTERSECT------------
+
+**select employee_id,job_id from employees;
+intersect
+select employee_id,job_id from job_history;
+
+**select employee_id,job_id from employees;
+intersect all
+select employee_id,job_id from job_history;
+
+MINUS-----------------
+
+**select employee_id,job_id from employees;
+minus
+select employee_id,job_id from job_history;
+
+
+

@@ -1,0 +1,46 @@
+8-12-22
+using DDL statements to create and manage tables
+
+table,view,sequence,index,synonym are database objects
+
+create,alter,drop,truncate are DDL statements
+------------------------------------------------------------------------------------
+using DEFAULT
+
+ex:create table hire_dates(id number(8),  hire_date date default sysdate);
+   insert into hire_dates values(1,default);
+   select * from hire_dates;
+
+Constraints:domain integrety and ref constraints
+
+not null,unique,primary key,check are domain integrety constraints
+
+foreign key is referential integrety constraints
+
+SQL constraints are used to specify rules for the data in a table.
+
+Constraints are used to limit the type of data that can go into a table. This ensures the accuracy and reliability of the data in the table. If there is any violation between the constraint and the data action, the action is aborted.
+
+Constraints can be column level or table level. Column level constraints apply to a column, and table level constraints apply to the whole table.
+
+The following constraints are commonly used in SQL:
+
+NOT NULL - Ensures that a column cannot have a NULL value
+UNIQUE - Ensures that all values in a column are different
+PRIMARY KEY - A combination of a NOT NULL and UNIQUE. Uniquely identifies each row in a table
+FOREIGN KEY - Prevents actions that would destroy links between tables
+CHECK - Ensures that the values in a column satisfies a specific condition
+DEFAULT - Sets a default value for a column if no value is specified
+CREATE INDEX - Used to create and retrieve data from the database very quickly
+
+ex:create table students(rollno varchar2(10) primary key,name varchar2(20) not null,
+   email varchar2(20) unique,dob date,address varchar2(20),
+   phno number(10) check(length(phno)=10); 
+
+
+
+
+
+
+
+

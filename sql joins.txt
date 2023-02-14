@@ -1,0 +1,37 @@
+JOINS
+
+1. INNER JOIN (also known as Simple Join)
+Inner joins join the multiple tables and return those rows for which the join condition is true. The inner join is the most common join among the types of join.
+
+Syntax:
+
+SELECT column [ , column ] FROM t1
+INNER JOIN t2
+ON t1.column = t2.column;
+
+example:
+
+select a.department_id,b.location_id,a.location_id
+from departments a
+inner join locations b
+on a.location_id = b.location_id;
+
+2.EQUI JOINS
+
+Oracle Equi Joins retrieves the matching column values of the multiple tables.
+The join condition or the comparison operator present in the WHERE clause of the select statement.
+
+syntax:
+
+SELECT column_list 
+FROM table1, table2
+WHERE table1.column_name =
+table2.column_name; 
+
+example:
+
+SELECT first_name, job_id, departments.department_id, department_name
+FROM employees, departments
+WHERE employees.department_id = departments.department_id
+ORDER BY last_name, job_id; 
+
